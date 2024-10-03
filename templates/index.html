@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% for i in post %}
+<div class="card-normal	bg-base-100 w-[100%] shadow-xl ">
+    <div class="card-body">
+      <h2 class="card-title">{{i.title}}</h2>
+      <p>{{i.description}}</p>
+      <div class="card-actions justify-end">
+        <button class="btn btn-primary"><a href="/showpost/{{i.author}}">ادامه مطلب</a></button>
+      </div>
+    </div>
+  </div><br><br>
+{% endfor %}
+{% endblock content %}
