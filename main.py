@@ -4,7 +4,8 @@ from flask import (
     url_for,
     request,
     session,
-    redirect
+    redirect,
+    flash
 )
 from models import (
     User,
@@ -35,21 +36,20 @@ def loginPage():
         username_response = validate.username(username)
         password = request.form["password"]
         password_response = validate.password(username=username , password=password)
+        get_session = session.get('username')
         print(username_response)
         print(password_response)
+        if get_session:
+            return redirect(url_for("dashboard"))
         
-        if username_response == True and password_response == True:
-            
+        if username_response == False and password_response == True:
+
             session["username"] = username
             session["last-online"] = datetime.datetime.now()
             return redirect(url_for("dashboard"))
         else:
-            erorr = "نام کاربری یا رمز عبور وارد شده اشتباه است"
-            return render_template("login.html" , erorr=erorr)
-        
-    get_session = session.get('username')
-    if get_session:
-        return redirect(url_for("dashboard"))
+            flash("نام کاربری یا رمز عبور وارد شده اشتباه است")
+            return render_template("login.html")
     return render_template("login.html")
 
 @app.route("/register" , methods=["GET" , "POST"])

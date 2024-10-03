@@ -8,8 +8,9 @@ class Validate:
     def password(self,username,password):
         
         get_password = User.select().where(User.username == username)
-        if password == get_password:
-            return True
+        for i in get_password:
+            if password == i.password:
+                return True
         return False
             
     def username(self ,*args , **kwargs):
