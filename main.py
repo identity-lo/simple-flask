@@ -35,8 +35,11 @@ def loginPage():
         username_response = validate.username(username)
         password = request.form["password"]
         password_response = validate.password(username=username , password=password)
-
+        print(username_response)
+        print(password_response)
+        
         if username_response == True and password_response == True:
+            
             session["username"] = username
             session["last-online"] = datetime.datetime.now()
             return redirect(url_for("dashboard"))
